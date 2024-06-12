@@ -1,0 +1,40 @@
+syntax = "proto3"; // Версия protobuf
+
+package auth; // Указывает пакет, чтобы указать пространство имён и избежать конфликтов
+
+option go_package = "prokofev.sso.v1;ssov1"; // Параметр для кодогенирации // todo вернуться сюда
+
+// todo вернуться и описать
+service Auth{
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
+}
+
+message RegisterRequest{
+  string email = 1; // Почта юзера на регистрацию
+  string password = 2; // Пароль юзера на регистрацию
+}
+
+message RegisterResponse{
+  int64 user_id = 1; // User_id по регистрации
+}
+
+message LoginRequest{
+  string email = 1; // Почта юзера на логирование
+  string password = 2; // Пароль юзера на логирование
+  int32 app_id = 3; //ID приложение в которое юзер логиниться, их может быть множество
+}
+
+message LoginResponse{
+  string token = 1; // Token залогированного юзера
+}
+
+message IsAdminRequest{
+  int64 user_id = 1; //ID юзера на проверку админ или нет
+}
+
+message IsAdminResponse{
+  bool is_admin = 1;
+}
+
